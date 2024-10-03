@@ -63,23 +63,22 @@ void MainWindow::on_pushButton_clicked(bool checked)
 void MainWindow::captureImage(int id,const QImage &image){
     Q_UNUSED(id);
 
+    QImage grayImage = image.convertToFormat(QImage::Format_Grayscale8);
     // Конвертируем изображение в формат QByteArray
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
     buffer.open(QIODevice::WriteOnly);
-    if (!image.save(&buffer, "JPEG")) {
+    if (!grayImage.save(&buffer, "JPEG")) {
         qDebug() << "Ошибка: не удалось сохранить изображение.";
         return;
     }
 
     // Отправляем данные
     sendMessage(byteArray, QHostAddress(targetAddress), targetPort);
-    qDebug() << "Изображение отправлено";
     if (capturing) {
-        qDebug() << "Новая отправка с задержкой";
-        QTimer::singleShot(50, this, [this]() {
+        // QTimer::singleShot(50, this, [this]() {
             imageCapture->capture();
-        });
+        // });
     }
 }
 
@@ -96,17 +95,12 @@ void MainWindow::sendMessage(const QByteArray &data, const QHostAddress &address
         QByteArray packet;
         QDataStream stream(&packet, QIODevice::WriteOnly);
 
-        stream << static_cast<quint16>(frameNumber);  // Номер кадра (например, всегда 0 для статического изображения)
-        stream << static_cast<quint16>(totalRows);  // Общее количество строк в кадре
-        stream << static_cast<quint16>(i);  // Номер текущей строки
-        stream << static_cast<quint16>(frame.bytesPerLine());  // Размер строки в байтах
-        stream << static_cast<quint8>(bytesPerPixel);  // Количество байт на пиксель
-        stream << static_cast<quint8>(0);  // Резервное поле
-
-        qDebug() << "ВСЕГО СТРОК" << totalRows;
-        qDebug() << "РАЗМЕР СТРОКИ" << frame.bytesPerLine();
-        qDebug() << "КОЛИЧЕСТВО БАЙТ НА ПИКСЕЛЬ" << bytesPerPixel;
-        qDebug() << "НОМЕР СТРОКИ" << i;
+        stream << static_cast<quint16>(frameNumber);
+        stream << static_cast<quint16>(totalRows);
+        stream << static_cast<quint16>(i);
+        stream << static_cast<quint16>(frame.bytesPerLine());
+        stream << static_cast<quint8>(bytesPerPixel);
+        stream << static_cast<quint8>(0);
 
         QByteArray rowData(reinterpret_cast<const char*>(frame.scanLine(i)), frame.bytesPerLine());
 
@@ -114,11 +108,10 @@ void MainWindow::sendMessage(const QByteArray &data, const QHostAddress &address
         stream.writeRawData(rowData.constData(), rowData.size());
 
         // Отправка пакета
-        qDebug() << "пакет успешно отпрален. Размер:" << packet.size();
         socket->writeDatagram(packet, QHostAddress(targetAddress), targetPort);
 
         QEventLoop loop;
-        QTimer::singleShot(5, &loop, &QEventLoop::quit);
+        QTimer::singleShot(1, &loop, &QEventLoop::quit);
         loop.exec();
     }
 }
@@ -136,27 +129,16 @@ void MainWindow::readPendingDatagrams(){
 
         qDebug() << "Получено сообщение от:" << sender.toString() << ":" << senderPort << command;
 
-        Command cmd = stringToCommand(command);
-
-        qDebug() << cmd;
-
-        switch (cmd) {
-        case CAMERA_ON:
+        if (command == "startCamera") {
             startCamera();
-            break;
-        case CAMERA_OFF:
+        } else if (command == "stopCamera") {
             stopCamera();
-            break;
-        case DISPLAY_ON:
+        } else if (command == "startDisplay") {
             startDisplay();
-            break;
-        case DISPLAY_OFF:
+        } else if (command == "stopDisplay") {
             stopDisplay();
-            break;
-        case UNKNOWN:
-        default:
-            qDebug() << "Неизвестная команда: " << command;
-            break;
+        } else {
+            qDebug() << "Неизвестная команда";
         }
 
     }
@@ -201,19 +183,5 @@ void MainWindow::stopDisplay(){
     frameNumber =0;
     ui->pushButton_2->setChecked(false);
     qDebug() << "Команда stopDisplay выполнена";
-}
-
-MainWindow::Command MainWindow::stringToCommand(const QString &command) {
-    if (command == "startCamera") {
-        return CAMERA_ON;
-    } else if (command == "stopCamera") {
-        return CAMERA_OFF;
-    } else if (command == "startDisplay") {
-        return DISPLAY_ON;
-    } else if (command == "stopDisplay") {
-        return DISPLAY_OFF;
-    } else {
-        return UNKNOWN;
-    }
 }
 

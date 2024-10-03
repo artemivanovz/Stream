@@ -52,7 +52,6 @@ private:
     QCameraImageCapture *imageCapture;
     QString targetAddress;
     quint16 targetPort;
-    Command stringToCommand(const QString &command);
     QTimer *packetTimer;
     int totalRows;      // Общее количество строк
     int bytesPerPixel;
