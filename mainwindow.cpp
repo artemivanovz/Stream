@@ -76,9 +76,9 @@ void MainWindow::captureImage(int id,const QImage &image){
     // Отправляем данные
     sendMessage(byteArray, QHostAddress(targetAddress), targetPort);
     if (capturing) {
-        // QTimer::singleShot(50, this, [this]() {
+         QTimer::singleShot(1, this, [this]() {
             imageCapture->capture();
-        // });
+        });
     }
 }
 
@@ -106,13 +106,8 @@ void MainWindow::sendMessage(const QByteArray &data, const QHostAddress &address
 
         // Добавляем данные строки в пакет
         stream.writeRawData(rowData.constData(), rowData.size());
-
         // Отправка пакета
         socket->writeDatagram(packet, QHostAddress(targetAddress), targetPort);
-
-        QEventLoop loop;
-        QTimer::singleShot(1, &loop, &QEventLoop::quit);
-        loop.exec();
     }
 }
 

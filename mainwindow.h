@@ -23,13 +23,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void sendMessage();
-    enum Command {
-        CAMERA_ON,
-        CAMERA_OFF,
-        DISPLAY_ON,
-        DISPLAY_OFF,
-        UNKNOWN
-    };
+
 private slots:
 
     void on_pushButton_clicked(bool checked);
