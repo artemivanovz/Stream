@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>330</y>
+      <x>130</x>
+      <y>380</y>
       <width>231</width>
       <height>131</height>
      </rect>
@@ -30,18 +30,18 @@
    <widget class="QCameraViewfinder" name="cameraViewfinder" native="true">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>80</y>
-      <width>481</width>
-      <height>201</height>
+      <x>110</x>
+      <y>10</y>
+      <width>531</width>
+      <height>361</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>330</y>
+      <x>390</x>
+      <y>380</y>
       <width>231</width>
       <height>131</height>
      </rect>

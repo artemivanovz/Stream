@@ -63,7 +63,7 @@ void MainWindow::on_pushButton_clicked(bool checked)
 void MainWindow::captureImage(int id,const QImage &image){
     Q_UNUSED(id);
 
-    QImage grayImage = image.convertToFormat(QImage::Format_Grayscale8);
+    QImage grayImage = image.convertToFormat(QImage::Format_RGB32);
     // Конвертируем изображение в формат QByteArray
     QByteArray byteArray;
     QBuffer buffer(&byteArray);

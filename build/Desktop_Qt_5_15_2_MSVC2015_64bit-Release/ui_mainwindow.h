@@ -39,13 +39,13 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(120, 330, 231, 131));
+        pushButton->setGeometry(QRect(130, 380, 231, 131));
         cameraViewfinder = new QCameraViewfinder(centralwidget);
         cameraViewfinder->setObjectName(QString::fromUtf8("cameraViewfinder"));
-        cameraViewfinder->setGeometry(QRect(120, 80, 481, 201));
+        cameraViewfinder->setGeometry(QRect(110, 10, 531, 361));
         pushButton_2 = new QPushButton(centralwidget);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(370, 330, 231, 131));
+        pushButton_2->setGeometry(QRect(390, 380, 231, 131));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
