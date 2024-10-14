@@ -24,9 +24,9 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QPushButton *pushButton;
+    QPushButton *CameraButton;
     QCameraViewfinder *cameraViewfinder;
-    QPushButton *pushButton_2;
+    QPushButton *StreamButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -37,15 +37,15 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(130, 380, 231, 131));
+        CameraButton = new QPushButton(centralwidget);
+        CameraButton->setObjectName(QString::fromUtf8("CameraButton"));
+        CameraButton->setGeometry(QRect(130, 380, 231, 131));
         cameraViewfinder = new QCameraViewfinder(centralwidget);
         cameraViewfinder->setObjectName(QString::fromUtf8("cameraViewfinder"));
         cameraViewfinder->setGeometry(QRect(110, 10, 531, 361));
-        pushButton_2 = new QPushButton(centralwidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(390, 380, 231, 131));
+        StreamButton = new QPushButton(centralwidget);
+        StreamButton->setObjectName(QString::fromUtf8("StreamButton"));
+        StreamButton->setGeometry(QRect(390, 380, 231, 131));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -63,8 +63,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "\320\232\320\220\320\234\320\225\320\240\320\220 \320\222\320\232\320\233", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "\320\242\320\240\320\220\320\235\320\241\320\233\320\257\320\246\320\230\320\257 \320\222\320\232\320\233", nullptr));
+        CameraButton->setText(QCoreApplication::translate("MainWindow", "\320\232\320\220\320\234\320\225\320\240\320\220 \320\222\320\232\320\233", nullptr));
+        StreamButton->setText(QCoreApplication::translate("MainWindow", "\320\242\320\240\320\220\320\235\320\241\320\233\320\257\320\246\320\230\320\257 \320\222\320\232\320\233", nullptr));
     } // retranslateUi
 
 };

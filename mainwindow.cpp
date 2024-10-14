@@ -1,17 +1,18 @@
 #include "mainwindow.h"
+#include "imagesender.h"
 #include "./ui_mainwindow.h"
 #include <QCamera>
 #include <QCameraViewfinder>
-#include <QVBoxLayout>
 #include <QBuffer>
 #include <QDebug>
 #include <QTimer>
-#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , camera(nullptr)
+    , imageCapture(nullptr)
+    , imageSender(new imagesender(this))
     , targetAddress("127.0.0.1")
     , targetPort(12346)
     , capturing(true)
@@ -25,11 +26,11 @@ MainWindow::MainWindow(QWidget *parent)
     imageCapture = new QCameraImageCapture(camera,this);
     connect(imageCapture, &QCameraImageCapture::imageCaptured,this, &MainWindow::captureImage);
 
-    ui->pushButton->setCheckable(true);
-    ui->pushButton->setChecked(false);
+    ui->CameraButton->setCheckable(true);
+    ui->CameraButton->setChecked(false);
 
-    ui->pushButton_2->setCheckable(true);
-    ui->pushButton_2->setChecked(false);
+    ui->StreamButton->setCheckable(true);
+    ui->StreamButton->setChecked(false);
 
     socket = new QUdpSocket(this);
     bool bindResult = socket->bind(QHostAddress::LocalHost, 12345);
@@ -46,71 +47,30 @@ MainWindow::~MainWindow()
     socket->close();
 }
 
-void MainWindow::on_pushButton_clicked(bool checked)
+void MainWindow::on_CameraButton_clicked(bool checked)
 {
     if(checked){
-        ui->pushButton->setText("КАМЕРА ВЫКЛ");
-        ui->cameraViewfinder->show();
-        camera->start();
+        startCamera();
     }
     else{
-        ui->pushButton->setText("КАМЕРА ВКЛ");
-        ui->cameraViewfinder->hide();
-        camera->stop();
+        stopCamera();
     }
 }
 
 void MainWindow::captureImage(int id,const QImage &image){
     Q_UNUSED(id);
 
-    QImage grayImage = image.convertToFormat(QImage::Format_RGB32);
-    // Конвертируем изображение в формат QByteArray
-    QByteArray byteArray;
-    QBuffer buffer(&byteArray);
-    buffer.open(QIODevice::WriteOnly);
-    if (!grayImage.save(&buffer, "JPEG")) {
-        qDebug() << "Ошибка: не удалось сохранить изображение.";
-        return;
-    }
+    QImage rgbImage = image.convertToFormat(QImage::Format_RGB32);
 
-    // Отправляем данные
-    sendMessage(byteArray, QHostAddress(targetAddress), targetPort);
+    imageSender->sendImage(rgbImage, QHostAddress(targetAddress), targetPort, frameNumber);
+    frameNumber++;
+
     if (capturing) {
          QTimer::singleShot(1, this, [this]() {
             imageCapture->capture();
         });
     }
 }
-
-void MainWindow::sendMessage(const QByteArray &data, const QHostAddress &address, quint16 port)
-{
-    frameNumber++;
-    QImage frame;
-    if(!frame.loadFromData(data,"JPEG")){
-        qDebug() << "Ошибка: не удалось сохранить изображение.";
-    }
-    int totalRows = frame.height();
-    int bytesPerPixel = frame.depth() / 8;
-    for(int i = 0 ; i < totalRows; ++i){
-        QByteArray packet;
-        QDataStream stream(&packet, QIODevice::WriteOnly);
-
-        stream << static_cast<quint16>(frameNumber);
-        stream << static_cast<quint16>(totalRows);
-        stream << static_cast<quint16>(i);
-        stream << static_cast<quint16>(frame.bytesPerLine());
-        stream << static_cast<quint8>(bytesPerPixel);
-        stream << static_cast<quint8>(0);
-
-        QByteArray rowData(reinterpret_cast<const char*>(frame.scanLine(i)), frame.bytesPerLine());
-
-        // Добавляем данные строки в пакет
-        stream.writeRawData(rowData.constData(), rowData.size());
-        // Отправка пакета
-        socket->writeDatagram(packet, QHostAddress(targetAddress), targetPort);
-    }
-}
-
 
 void MainWindow::readPendingDatagrams(){
     while (socket->hasPendingDatagrams()) {
@@ -139,44 +99,41 @@ void MainWindow::readPendingDatagrams(){
     }
 }
 
-void MainWindow::on_pushButton_2_clicked(bool checked)
+void MainWindow::on_StreamButton_clicked(bool checked)
 {
     if (checked) {
-        ui->pushButton_2->setText("ТРАНСЛЯЦИЯ ВЫКЛ");
-        capturing = true;
-        imageCapture->capture();
+        startDisplay();
     } else {
-        ui->pushButton_2->setText("ТРАНСЛЯЦИЯ ВКЛ");
-        capturing = false;
+        stopDisplay();
     }
 }
 
 void MainWindow::startCamera(){
-    ui->pushButton->setText("КАМЕРА ВЫКЛ");
+    ui->CameraButton->setText("КАМЕРА ВЫКЛ");
     ui->cameraViewfinder->show();
     camera->start();
-    ui->pushButton->setChecked(true);
+    ui->CameraButton->setChecked(true);
     qDebug() << "Команда startCamera выполнена";
 }
 void MainWindow::stopCamera(){
-    ui->pushButton->setText("КАМЕРА ВКЛ");
+    ui->CameraButton->setText("КАМЕРА ВКЛ");
     ui->cameraViewfinder->hide();
     camera->stop();
-    ui->pushButton->setChecked(false);
+    ui->CameraButton->setChecked(false);
     qDebug() << "Команда stopCamera выполнена";
 }
 void MainWindow::startDisplay(){
-    ui->pushButton_2->setText("ТРАНСЛЯЦИЯ ВЫКЛ");
+    ui->StreamButton->setText("ТРАНСЛЯЦИЯ ВЫКЛ");
     capturing = true;
     imageCapture->capture();
-    ui->pushButton_2->setChecked(true);
+    ui->StreamButton->setChecked(true);
     qDebug() << "Команда startDisplay выполнена";
 }
 void MainWindow::stopDisplay(){
-    ui->pushButton_2->setText("ТРАНСЛЯЦИЯ ВКЛ");
+    ui->StreamButton->setText("ТРАНСЛЯЦИЯ ВКЛ");
     capturing = false;
     frameNumber =0;
-    ui->pushButton_2->setChecked(false);
+    ui->StreamButton->setChecked(false);
     qDebug() << "Команда stopDisplay выполнена";
 }
 

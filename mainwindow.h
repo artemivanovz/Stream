@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include "imagesender.h"
 #include <QMainWindow>
 #include <QCamera>
 #include <QCameraViewfinder>
@@ -7,7 +8,6 @@
 #include <QMainWindow>
 #include <QUdpSocket>
 #include <QHostAddress>
-#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,32 +26,30 @@ public:
 
 private slots:
 
-    void on_pushButton_clicked(bool checked);
-    void readPendingDatagrams();
-    void captureImage(int id, const QImage &image);
-    // void captureAndSendImage();
     void startCamera();
     void stopCamera();
     void startDisplay();
     void stopDisplay();
-    void sendMessage(const QByteArray &data, const QHostAddress &address, quint16 port);
-    void on_pushButton_2_clicked(bool checked);
-    // void processCommand(const QString &command);
+
+    void readPendingDatagrams();
+    void captureImage(int id, const QImage &image);
+
+    void on_StreamButton_clicked(bool checked);
+    void on_CameraButton_clicked(bool checked);
 
 private:
     Ui::MainWindow *ui;
     QCamera *camera;
-    QUdpSocket *socket;
-    QTimer *captureTimer;
     QCameraImageCapture *imageCapture;
+    imagesender *imageSender;
+    QUdpSocket *socket;
     QString targetAddress;
     quint16 targetPort;
-    QTimer *packetTimer;
-    int totalRows;      // Общее количество строк
-    int bytesPerPixel;
-    int currentRow;  // Переменная для отслеживания текущей строки
-    QImage frame;    // Изображение, которое будет передаваться
+
     bool capturing;
+    int totalRows;
+    int bytesPerPixel;
+    int currentRow;
     int frameNumber;
 };
 #endif // MAINWINDOW_H
