@@ -6,6 +6,11 @@
 #include <QBuffer>
 #include <QDebug>
 #include <QTimer>
+#include <QSettings>
+#include <QFile>
+
+QString MainWindow::targetAddress = "";
+quint16 MainWindow::targetPort = 0;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,8 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     , camera(nullptr)
     , imageCapture(nullptr)
     , imageSender(new imagesender(this))
-    , targetAddress("127.0.0.1")
-    , targetPort(12346)
+    , configManager(new ConfigManager(this))
     , capturing(true)
     , frameNumber(0)
 {
@@ -22,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     camera = new QCamera(this);
     camera->setViewfinder(ui->cameraViewfinder);
+
+    targetAddress = configManager->getTargetAddress();
+    targetPort = configManager->getTargetPort();
 
     imageCapture = new QCameraImageCapture(camera,this);
     connect(imageCapture, &QCameraImageCapture::imageCaptured,this, &MainWindow::captureImage);

@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "imagesender.h"
+#include "configmanager.h"
 #include <QMainWindow>
 #include <QCamera>
 #include <QCameraViewfinder>
@@ -42,10 +43,11 @@ private:
     QCamera *camera;
     QCameraImageCapture *imageCapture;
     imagesender *imageSender;
+    ConfigManager *configManager;
     QUdpSocket *socket;
-    QString targetAddress;
-    quint16 targetPort;
 
+    static QString targetAddress;
+    static quint16 targetPort;
     bool capturing;
     int totalRows;
     int bytesPerPixel;
