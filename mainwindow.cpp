@@ -67,15 +67,13 @@ void MainWindow::on_CameraButton_clicked(bool checked)
 void MainWindow::captureImage(int id,const QImage &image){
     Q_UNUSED(id);
 
-    QImage rgbImage = image.convertToFormat(QImage::Format_RGB32);
+    QImage greyImage = image.convertToFormat(QImage::Format_Grayscale8);
 
-    imageSender->sendImage(rgbImage, QHostAddress(targetAddress), targetPort, frameNumber);
+    imageSender->sendImage(greyImage, QHostAddress(targetAddress), targetPort, frameNumber);
     frameNumber++;
 
     if (capturing) {
-         QTimer::singleShot(1, this, [this]() {
-            imageCapture->capture();
-        });
+          QMetaObject::invokeMethod(imageCapture, "capture", Qt::QueuedConnection);
     }
 }
 
