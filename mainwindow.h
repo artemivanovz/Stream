@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include "imagesender.h"
 #include "configmanager.h"
+#include "commandreceiver.h"
 #include <QMainWindow>
 #include <QCamera>
 #include <QCameraViewfinder>
@@ -32,7 +33,7 @@ private slots:
     void startDisplay();
     void stopDisplay();
 
-    void readPendingDatagrams();
+    // void readPendingDatagrams();
     void captureImage(int id, const QImage &image);
 
     void on_StreamButton_clicked(bool checked);
@@ -44,6 +45,7 @@ private:
     QCameraImageCapture *imageCapture;
     imagesender *imageSender;
     ConfigManager *configManager;
+    CommandReceiver *commandReceiver;
     QUdpSocket *socket;
 
     static QString targetAddress;

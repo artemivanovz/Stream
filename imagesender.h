@@ -11,7 +11,7 @@ class imagesender : public QObject {
 
 public:
     imagesender(QObject *parent = nullptr);
-    void sendImage(const QImage &image, const QHostAddress &address, quint16 port, int frameNumber);
+    void sendImage(const QImage &image, const QHostAddress &address, quint16 port, int frameNumber,QUdpSocket *hostsocket);
 
 private:
     QUdpSocket *socket;

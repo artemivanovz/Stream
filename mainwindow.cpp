@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "imagesender.h"
+#include "commandreceiver.h"
 #include "./ui_mainwindow.h"
 #include <QCamera>
 #include <QCameraViewfinder>
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     , imageCapture(nullptr)
     , imageSender(new imagesender(this))
     , configManager(new ConfigManager(this))
+    , commandReceiver(new CommandReceiver(this))
     , capturing(true)
     , frameNumber(0)
 {
@@ -33,18 +35,18 @@ MainWindow::MainWindow(QWidget *parent)
     imageCapture = new QCameraImageCapture(camera,this);
     connect(imageCapture, &QCameraImageCapture::imageCaptured,this, &MainWindow::captureImage);
 
+    connect(commandReceiver, &CommandReceiver::startCameraCommand, this, &MainWindow::startCamera);
+    connect(commandReceiver, &CommandReceiver::stopCameraCommand, this, &MainWindow::stopCamera);
+    connect(commandReceiver, &CommandReceiver::startDisplayCommand, this, &MainWindow::startDisplay);
+    connect(commandReceiver, &CommandReceiver::stopDisplayCommand, this, &MainWindow::stopDisplay);
+
     ui->CameraButton->setCheckable(true);
     ui->CameraButton->setChecked(false);
 
     ui->StreamButton->setCheckable(true);
     ui->StreamButton->setChecked(false);
 
-    socket = new QUdpSocket(this);
-    bool bindResult = socket->bind(QHostAddress::LocalHost, 12345);
-    if(!bindResult){
-        qDebug() << "Ошибка привязки к порту";
-    }
-    connect(socket, &QUdpSocket::readyRead, this, &MainWindow::readPendingDatagrams);
+    commandReceiver->bindSocket(QHostAddress::LocalHost, 12345);
 
 }
 
@@ -64,46 +66,6 @@ void MainWindow::on_CameraButton_clicked(bool checked)
     }
 }
 
-void MainWindow::captureImage(int id,const QImage &image){
-    Q_UNUSED(id);
-
-    QImage greyImage = image.convertToFormat(QImage::Format_Grayscale8);
-
-    imageSender->sendImage(greyImage, QHostAddress(targetAddress), targetPort, frameNumber);
-    frameNumber++;
-
-    if (capturing) {
-          QMetaObject::invokeMethod(imageCapture, "capture", Qt::QueuedConnection);
-    }
-}
-
-void MainWindow::readPendingDatagrams(){
-    while (socket->hasPendingDatagrams()) {
-        QByteArray buffer;
-        buffer.resize(socket->pendingDatagramSize());
-        QHostAddress sender;
-        quint16 senderPort;
-        socket->readDatagram(buffer.data(), buffer.size(), &sender, &senderPort);
-
-        QString command = QString::fromUtf8(buffer);
-
-        qDebug() << "Получено сообщение от:" << sender.toString() << ":" << senderPort << command;
-
-        if (command == "startCamera") {
-            startCamera();
-        } else if (command == "stopCamera") {
-            stopCamera();
-        } else if (command == "startDisplay") {
-            startDisplay();
-        } else if (command == "stopDisplay") {
-            stopDisplay();
-        } else {
-            qDebug() << "Неизвестная команда";
-        }
-
-    }
-}
-
 void MainWindow::on_StreamButton_clicked(bool checked)
 {
     if (checked) {
@@ -112,6 +74,22 @@ void MainWindow::on_StreamButton_clicked(bool checked)
         stopDisplay();
     }
 }
+
+void MainWindow::captureImage(int id,const QImage &image){
+    Q_UNUSED(id);
+
+    QUdpSocket *commandSocket = commandReceiver->getSocket();
+
+    QImage greyImage = image.convertToFormat(QImage::Format_Grayscale8);
+
+    imageSender->sendImage(greyImage, QHostAddress(targetAddress), targetPort, frameNumber, commandSocket);
+    frameNumber++;
+
+    if (capturing) {
+          QMetaObject::invokeMethod(imageCapture, "capture", Qt::QueuedConnection);
+    }
+}
+
 
 void MainWindow::startCamera(){
     ui->CameraButton->setText("КАМЕРА ВЫКЛ");

@@ -6,7 +6,7 @@ imagesender::imagesender(QObject *parent) : QObject(parent) {
     socket = new QUdpSocket(this);
 }
 
-void imagesender::sendImage(const QImage &image, const QHostAddress &address, quint16 port, int frameNumber) {
+void imagesender::sendImage(const QImage &image, const QHostAddress &address, quint16 port, int frameNumber,QUdpSocket *hostsocket) {
     int totalRows = image.height();
     int bytesPerPixel = image.depth() / 8;
 
@@ -25,7 +25,7 @@ void imagesender::sendImage(const QImage &image, const QHostAddress &address, qu
         QByteArray rowData(reinterpret_cast<const char*>(image.scanLine(i)), image.bytesPerLine());
         stream.writeRawData(rowData.constData(), rowData.size());
 
-        socket->writeDatagram(packet, address, port);
+        hostsocket->writeDatagram(packet, address, port);
     }
 
      frameNumber++;
