@@ -32,4 +32,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    build/Desktop_Qt_5_15_2_MinGW_64_bit-Release/config.ini \
     config.ini

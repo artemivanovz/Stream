@@ -29,7 +29,9 @@ void CommandReceiver::onReadyRead(){
 
         QString command = QString::fromUtf8(buffer);
 
-        qDebug() << "Получено сообщение от:" << sender.toString() << ":" << senderPort << command;
+        if(command.trimmed().isEmpty()){
+            return;
+        }
 
         handleCommand(command);
     }
