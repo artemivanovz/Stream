@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     targetPort = configManager->getTargetPort();
 
     imageCapture = new QCameraImageCapture(camera,this);
+    imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
     connect(imageCapture, &QCameraImageCapture::imageCaptured,this, &MainWindow::captureImage);
 
     connect(commandReceiver, &CommandReceiver::startCameraCommand, this, &MainWindow::startCamera);

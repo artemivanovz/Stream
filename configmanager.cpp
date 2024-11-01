@@ -13,7 +13,7 @@ ConfigManager::ConfigManager(QObject *parent)
 void ConfigManager::loadConfig()
 {
     targetAddress = settings->value("NetworkSettings/targetAddress", "127.0.0.1").toString();
-    targetPort = settings->value("NetworkSettings/targetPort", 12345).toUInt();
+    targetPort = settings->value("NetworkSettings/targetPort", 12346).toUInt();
 }
 
 QString ConfigManager::getTargetAddress() const
