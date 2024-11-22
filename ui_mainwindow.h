@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.13
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,10 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <qcameraviewfinder.h>
 
@@ -24,8 +27,11 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QPushButton *CameraButton;
+    QGridLayout *gridLayout_2;
+    QVBoxLayout *verticalLayout;
     QCameraViewfinder *cameraViewfinder;
+    QHBoxLayout *horizontalLayout;
+    QPushButton *CameraButton;
     QPushButton *StreamButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -37,9 +43,31 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        gridLayout_2 = new QGridLayout(centralwidget);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(50);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setSizeConstraint(QLayout::SizeConstraint::SetDefaultConstraint);
+        cameraViewfinder = new QCameraViewfinder(centralwidget);
+        cameraViewfinder->setObjectName(QString::fromUtf8("cameraViewfinder"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(16);
+        sizePolicy.setVerticalStretch(9);
+        sizePolicy.setHeightForWidth(cameraViewfinder->sizePolicy().hasHeightForWidth());
+        cameraViewfinder->setSizePolicy(sizePolicy);
+
+        verticalLayout->addWidget(cameraViewfinder);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         CameraButton = new QPushButton(centralwidget);
         CameraButton->setObjectName(QString::fromUtf8("CameraButton"));
-        CameraButton->setGeometry(QRect(130, 380, 231, 131));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(CameraButton->sizePolicy().hasHeightForWidth());
+        CameraButton->setSizePolicy(sizePolicy1);
         CameraButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #D2B48C; /* \320\221\320\276\320\273\320\265\320\265 \320\272\320\276\321\200\320\270\321\207\320\275\320\265\320\262\321\213\320\271 \320\276\321\202\321\202\320\265\320\275\320\276\320\272 \320\261\320\265\320\266\320\265\320\262\320\276\320\263\320\276 */\n"
 "    border: 2px solid #A0522D; /* \320\221\320\276\320\273\320\265\320\265 \320\272\320\276\320\275\321\202\321\200\320\260\321\201\321\202\320\275\320\260\321\217 \320\276\320\272\320\260\320\275\321\202\320\276\320\262\320\272\320\260 */\n"
@@ -59,12 +87,13 @@ public:
 "QPushButton:pressed {\n"
 "    background-color: #8B4513; /* \320\246\320\262\320\265\321\202 \320\277\321\200\320\270 \320\275\320\260\320\266\320\260\321\202\320\270\320\270 */\n"
 "}"));
-        cameraViewfinder = new QCameraViewfinder(centralwidget);
-        cameraViewfinder->setObjectName(QString::fromUtf8("cameraViewfinder"));
-        cameraViewfinder->setGeometry(QRect(110, 10, 531, 361));
+
+        horizontalLayout->addWidget(CameraButton);
+
         StreamButton = new QPushButton(centralwidget);
         StreamButton->setObjectName(QString::fromUtf8("StreamButton"));
-        StreamButton->setGeometry(QRect(390, 380, 231, 131));
+        sizePolicy1.setHeightForWidth(StreamButton->sizePolicy().hasHeightForWidth());
+        StreamButton->setSizePolicy(sizePolicy1);
         StreamButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #D2B48C; /* \320\221\320\276\320\273\320\265\320\265 \320\272\320\276\321\200\320\270\321\207\320\275\320\265\320\262\321\213\320\271 \320\276\321\202\321\202\320\265\320\275\320\276\320\272 \320\261\320\265\320\266\320\265\320\262\320\276\320\263\320\276 */\n"
 "    border: 2px solid #A0522D; /* \320\221\320\276\320\273\320\265\320\265 \320\272\320\276\320\275\321\202\321\200\320\260\321\201\321\202\320\275\320\260\321\217 \320\276\320\272\320\260\320\275\321\202\320\276\320\262\320\272\320\260 */\n"
@@ -84,6 +113,16 @@ public:
 "QPushButton:pressed {\n"
 "    background-color: #8B4513; /* \320\246\320\262\320\265\321\202 \320\277\321\200\320\270 \320\275\320\260\320\266\320\260\321\202\320\270\320\270 */\n"
 "}"));
+
+        horizontalLayout->addWidget(StreamButton);
+
+
+        verticalLayout->addLayout(horizontalLayout);
+
+        verticalLayout->setStretch(1, 4);
+
+        gridLayout_2->addLayout(verticalLayout, 0, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));

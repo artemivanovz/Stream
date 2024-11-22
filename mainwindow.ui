@@ -14,20 +14,40 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="CameraButton">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>380</y>
-      <width>231</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="whatsThis">
-     <string/>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,4">
+      <property name="spacing">
+       <number>50</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <widget class="QCameraViewfinder" name="cameraViewfinder" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>16</horstretch>
+          <verstretch>9</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="CameraButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="whatsThis">
+           <string/>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
     background-color: #D2B48C; /* Более коричневый оттенок бежевого */
     border: 2px solid #A0522D; /* Более контрастная окантовка */
     border-radius: 25px; /* Скругленные края */
@@ -45,32 +65,22 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #8B4513; /* Цвет при нажатии */
 }</string>
-    </property>
-    <property name="text">
-     <string>КАМЕРА ВКЛ</string>
-    </property>
-   </widget>
-   <widget class="QCameraViewfinder" name="cameraViewfinder" native="true">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>10</y>
-      <width>531</width>
-      <height>361</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="StreamButton">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>380</y>
-      <width>231</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
+          </property>
+          <property name="text">
+           <string>КАМЕРА ВКЛ</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="StreamButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
     background-color: #D2B48C; /* Более коричневый оттенок бежевого */
     border: 2px solid #A0522D; /* Более контрастная окантовка */
     border-radius: 25px; /* Скругленные края */
@@ -88,11 +98,17 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #8B4513; /* Цвет при нажатии */
 }</string>
-    </property>
-    <property name="text">
-     <string>ТРАНСЛЯЦИЯ ВКЛ</string>
-    </property>
-   </widget>
+          </property>
+          <property name="text">
+           <string>ТРАНСЛЯЦИЯ ВКЛ</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

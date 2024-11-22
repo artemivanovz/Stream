@@ -9,6 +9,7 @@
 #include <QTimer>
 #include <QSettings>
 #include <QFile>
+#include <QSizePolicy>
 
 QString MainWindow::targetAddress = "";
 quint16 MainWindow::targetPort = 0;
@@ -28,6 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     camera = new QCamera(this);
     camera->setViewfinder(ui->cameraViewfinder);
+
+    QSizePolicy sp_retain = ui->cameraViewfinder->sizePolicy();
+    sp_retain.setRetainSizeWhenHidden(true);
+    ui->cameraViewfinder->setSizePolicy(sp_retain);
 
     targetAddress = configManager->getTargetAddress();
     targetPort = configManager->getTargetPort();
