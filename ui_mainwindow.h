@@ -13,13 +13,13 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include <qcameraviewfinder.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -27,9 +27,9 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QGridLayout *gridLayout_2;
+    QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout;
-    QCameraViewfinder *cameraViewfinder;
+    QLabel *imageLabel;
     QHBoxLayout *horizontalLayout;
     QPushButton *CameraButton;
     QPushButton *StreamButton;
@@ -43,21 +43,22 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        gridLayout_2 = new QGridLayout(centralwidget);
-        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        gridLayout = new QGridLayout(centralwidget);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setSpacing(50);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setSizeConstraint(QLayout::SizeConstraint::SetDefaultConstraint);
-        cameraViewfinder = new QCameraViewfinder(centralwidget);
-        cameraViewfinder->setObjectName(QString::fromUtf8("cameraViewfinder"));
+        imageLabel = new QLabel(centralwidget);
+        imageLabel->setObjectName(QString::fromUtf8("imageLabel"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(16);
         sizePolicy.setVerticalStretch(9);
-        sizePolicy.setHeightForWidth(cameraViewfinder->sizePolicy().hasHeightForWidth());
-        cameraViewfinder->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(imageLabel->sizePolicy().hasHeightForWidth());
+        imageLabel->setSizePolicy(sizePolicy);
+        imageLabel->setMinimumSize(QSize(160, 60));
+        imageLabel->setLayoutDirection(Qt::LayoutDirection::LeftToRight);
+        imageLabel->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
-        verticalLayout->addWidget(cameraViewfinder);
+        verticalLayout->addWidget(imageLabel);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -119,9 +120,10 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
-        verticalLayout->setStretch(1, 4);
+        verticalLayout->setStretch(0, 2);
+        verticalLayout->setStretch(1, 1);
 
-        gridLayout_2->addLayout(verticalLayout, 0, 0, 1, 1);
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -140,6 +142,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        imageLabel->setText(QString());
 #if QT_CONFIG(whatsthis)
         CameraButton->setWhatsThis(QString());
 #endif // QT_CONFIG(whatsthis)

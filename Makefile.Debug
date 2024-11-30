@@ -520,6 +520,8 @@ debug/moc_mainwindow.cpp: mainwindow.h \
 		../../5.15.2/mingw81_64/include/QtMultimedia/QCameraImageCapture \
 		../../5.15.2/mingw81_64/include/QtMultimedia/qcameraimagecapture.h \
 		../../5.15.2/mingw81_64/include/QtMultimedia/qmediaencodersettings.h \
+		../../5.15.2/mingw81_64/include/QtMultimedia/QVideoProbe \
+		../../5.15.2/mingw81_64/include/QtMultimedia/qvideoprobe.h \
 		debug/moc_predefs.h \
 		../../5.15.2/mingw81_64/bin/moc.exe
 	D:\Qt_orig\5.15.2\mingw81_64\bin\moc.exe $(DEFINES) --include D:/Qt_orig/programs/CameraTest/debug/moc_predefs.h -ID:/Qt_orig/5.15.2/mingw81_64/mkspecs/win32-g++ -ID:/Qt_orig/programs/CameraTest -ID:/Qt_orig/5.15.2/mingw81_64/include -ID:/Qt_orig/5.15.2/mingw81_64/include/QtMultimediaWidgets -ID:/Qt_orig/5.15.2/mingw81_64/include/QtWidgets -ID:/Qt_orig/5.15.2/mingw81_64/include/QtMultimedia -ID:/Qt_orig/5.15.2/mingw81_64/include/QtGui -ID:/Qt_orig/5.15.2/mingw81_64/include/QtANGLE -ID:/Qt_orig/5.15.2/mingw81_64/include/QtNetwork -ID:/Qt_orig/5.15.2/mingw81_64/include/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o debug\moc_mainwindow.cpp
@@ -532,119 +534,7 @@ compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
 ui_mainwindow.h: mainwindow.ui \
-		../../5.15.2/mingw81_64/bin/uic.exe \
-		../../5.15.2/mingw81_64/include/QtMultimediaWidgets/qcameraviewfinder.h \
-		../../5.15.2/mingw81_64/include/QtCore/qstringlist.h \
-		../../5.15.2/mingw81_64/include/QtCore/qlist.h \
-		../../5.15.2/mingw81_64/include/QtCore/qalgorithms.h \
-		../../5.15.2/mingw81_64/include/QtCore/qglobal.h \
-		../../5.15.2/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
-		../../5.15.2/mingw81_64/include/QtCore/qconfig.h \
-		../../5.15.2/mingw81_64/include/QtCore/qtcore-config.h \
-		../../5.15.2/mingw81_64/include/QtCore/qsystemdetection.h \
-		../../5.15.2/mingw81_64/include/QtCore/qprocessordetection.h \
-		../../5.15.2/mingw81_64/include/QtCore/qcompilerdetection.h \
-		../../5.15.2/mingw81_64/include/QtCore/qtypeinfo.h \
-		../../5.15.2/mingw81_64/include/QtCore/qsysinfo.h \
-		../../5.15.2/mingw81_64/include/QtCore/qlogging.h \
-		../../5.15.2/mingw81_64/include/QtCore/qflags.h \
-		../../5.15.2/mingw81_64/include/QtCore/qatomic.h \
-		../../5.15.2/mingw81_64/include/QtCore/qbasicatomic.h \
-		../../5.15.2/mingw81_64/include/QtCore/qatomic_bootstrap.h \
-		../../5.15.2/mingw81_64/include/QtCore/qgenericatomic.h \
-		../../5.15.2/mingw81_64/include/QtCore/qatomic_cxx11.h \
-		../../5.15.2/mingw81_64/include/QtCore/qatomic_msvc.h \
-		../../5.15.2/mingw81_64/include/QtCore/qglobalstatic.h \
-		../../5.15.2/mingw81_64/include/QtCore/qmutex.h \
-		../../5.15.2/mingw81_64/include/QtCore/qnumeric.h \
-		../../5.15.2/mingw81_64/include/QtCore/qversiontagging.h \
-		../../5.15.2/mingw81_64/include/QtCore/qiterator.h \
-		../../5.15.2/mingw81_64/include/QtCore/qrefcount.h \
-		../../5.15.2/mingw81_64/include/QtCore/qarraydata.h \
-		../../5.15.2/mingw81_64/include/QtCore/qhashfunctions.h \
-		../../5.15.2/mingw81_64/include/QtCore/qstring.h \
-		../../5.15.2/mingw81_64/include/QtCore/qchar.h \
-		../../5.15.2/mingw81_64/include/QtCore/qbytearray.h \
-		../../5.15.2/mingw81_64/include/QtCore/qnamespace.h \
-		../../5.15.2/mingw81_64/include/QtCore/qstringliteral.h \
-		../../5.15.2/mingw81_64/include/QtCore/qstringalgorithms.h \
-		../../5.15.2/mingw81_64/include/QtCore/qstringview.h \
-		../../5.15.2/mingw81_64/include/QtCore/qstringbuilder.h \
-		../../5.15.2/mingw81_64/include/QtCore/qpair.h \
-		../../5.15.2/mingw81_64/include/QtCore/qvector.h \
-		../../5.15.2/mingw81_64/include/QtCore/qcontainertools_impl.h \
-		../../5.15.2/mingw81_64/include/QtCore/qpoint.h \
-		../../5.15.2/mingw81_64/include/QtCore/qbytearraylist.h \
-		../../5.15.2/mingw81_64/include/QtCore/qregexp.h \
-		../../5.15.2/mingw81_64/include/QtCore/qstringmatcher.h \
-		../../5.15.2/mingw81_64/include/QtCore/qsize.h \
-		../../5.15.2/mingw81_64/include/QtCore/qmargins.h \
-		../../5.15.2/mingw81_64/include/QtCore/qrect.h \
-		../../5.15.2/mingw81_64/include/QtMultimedia/qmediacontrol.h \
-		../../5.15.2/mingw81_64/include/QtMultimedia/qtmultimediaglobal.h \
-		../../5.15.2/mingw81_64/include/QtGui/qtguiglobal.h \
-		../../5.15.2/mingw81_64/include/QtGui/qtgui-config.h \
-		../../5.15.2/mingw81_64/include/QtMultimedia/qtmultimedia-config.h \
-		../../5.15.2/mingw81_64/include/QtCore/qobject.h \
-		../../5.15.2/mingw81_64/include/QtCore/qobjectdefs.h \
-		../../5.15.2/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		../../5.15.2/mingw81_64/include/QtCore/qcoreevent.h \
-		../../5.15.2/mingw81_64/include/QtCore/qscopedpointer.h \
-		../../5.15.2/mingw81_64/include/QtCore/qmetatype.h \
-		../../5.15.2/mingw81_64/include/QtCore/qvarlengtharray.h \
-		../../5.15.2/mingw81_64/include/QtCore/qcontainerfwd.h \
-		../../5.15.2/mingw81_64/include/QtCore/qobject_impl.h \
-		../../5.15.2/mingw81_64/include/QtCore/qvariant.h \
-		../../5.15.2/mingw81_64/include/QtCore/qmap.h \
-		../../5.15.2/mingw81_64/include/QtCore/qdebug.h \
-		../../5.15.2/mingw81_64/include/QtCore/qhash.h \
-		../../5.15.2/mingw81_64/include/QtCore/qtextstream.h \
-		../../5.15.2/mingw81_64/include/QtCore/qiodevice.h \
-		../../5.15.2/mingw81_64/include/QtCore/qlocale.h \
-		../../5.15.2/mingw81_64/include/QtCore/qshareddata.h \
-		../../5.15.2/mingw81_64/include/QtCore/qset.h \
-		../../5.15.2/mingw81_64/include/QtCore/qcontiguouscache.h \
-		../../5.15.2/mingw81_64/include/QtCore/qsharedpointer.h \
-		../../5.15.2/mingw81_64/include/QtCore/qsharedpointer_impl.h \
-		../../5.15.2/mingw81_64/include/QtMultimedia/qmediaobject.h \
-		../../5.15.2/mingw81_64/include/QtMultimedia/qmultimedia.h \
-		../../5.15.2/mingw81_64/include/QtMultimedia/qmediaservice.h \
-		../../5.15.2/mingw81_64/include/QtMultimediaWidgets/qvideowidget.h \
-		../../5.15.2/mingw81_64/include/QtWidgets/qwidget.h \
-		../../5.15.2/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../5.15.2/mingw81_64/include/QtWidgets/qtwidgets-config.h \
-		../../5.15.2/mingw81_64/include/QtGui/qwindowdefs.h \
-		../../5.15.2/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		../../5.15.2/mingw81_64/include/QtGui/qpaintdevice.h \
-		../../5.15.2/mingw81_64/include/QtGui/qpalette.h \
-		../../5.15.2/mingw81_64/include/QtGui/qcolor.h \
-		../../5.15.2/mingw81_64/include/QtGui/qrgb.h \
-		../../5.15.2/mingw81_64/include/QtGui/qrgba64.h \
-		../../5.15.2/mingw81_64/include/QtGui/qbrush.h \
-		../../5.15.2/mingw81_64/include/QtGui/qmatrix.h \
-		../../5.15.2/mingw81_64/include/QtGui/qpolygon.h \
-		../../5.15.2/mingw81_64/include/QtGui/qregion.h \
-		../../5.15.2/mingw81_64/include/QtCore/qdatastream.h \
-		../../5.15.2/mingw81_64/include/QtCore/qline.h \
-		../../5.15.2/mingw81_64/include/QtGui/qtransform.h \
-		../../5.15.2/mingw81_64/include/QtGui/qimage.h \
-		../../5.15.2/mingw81_64/include/QtGui/qpixelformat.h \
-		../../5.15.2/mingw81_64/include/QtGui/qpixmap.h \
-		../../5.15.2/mingw81_64/include/QtGui/qfont.h \
-		../../5.15.2/mingw81_64/include/QtGui/qfontmetrics.h \
-		../../5.15.2/mingw81_64/include/QtGui/qfontinfo.h \
-		../../5.15.2/mingw81_64/include/QtWidgets/qsizepolicy.h \
-		../../5.15.2/mingw81_64/include/QtGui/qcursor.h \
-		../../5.15.2/mingw81_64/include/QtGui/qkeysequence.h \
-		../../5.15.2/mingw81_64/include/QtGui/qevent.h \
-		../../5.15.2/mingw81_64/include/QtCore/qurl.h \
-		../../5.15.2/mingw81_64/include/QtCore/qurlquery.h \
-		../../5.15.2/mingw81_64/include/QtCore/qfile.h \
-		../../5.15.2/mingw81_64/include/QtCore/qfiledevice.h \
-		../../5.15.2/mingw81_64/include/QtGui/qvector2d.h \
-		../../5.15.2/mingw81_64/include/QtGui/qtouchdevice.h \
-		../../5.15.2/mingw81_64/include/QtMultimediaWidgets/qtmultimediawidgetdefs.h \
-		../../5.15.2/mingw81_64/include/QtMultimedia/qmediabindableinterface.h
+		../../5.15.2/mingw81_64/bin/uic.exe
 	D:\Qt_orig\5.15.2\mingw81_64\bin\uic.exe mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
@@ -1050,6 +940,8 @@ debug/main.o: main.cpp mainwindow.h \
 		../../5.15.2/mingw81_64/include/QtMultimedia/QCameraImageCapture \
 		../../5.15.2/mingw81_64/include/QtMultimedia/qcameraimagecapture.h \
 		../../5.15.2/mingw81_64/include/QtMultimedia/qmediaencodersettings.h \
+		../../5.15.2/mingw81_64/include/QtMultimedia/QVideoProbe \
+		../../5.15.2/mingw81_64/include/QtMultimedia/qvideoprobe.h \
 		../../5.15.2/mingw81_64/include/QtWidgets/QApplication \
 		../../5.15.2/mingw81_64/include/QtWidgets/qapplication.h \
 		../../5.15.2/mingw81_64/include/QtCore/qcoreapplication.h \
@@ -1205,6 +1097,8 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../5.15.2/mingw81_64/include/QtMultimedia/QCameraImageCapture \
 		../../5.15.2/mingw81_64/include/QtMultimedia/qcameraimagecapture.h \
 		../../5.15.2/mingw81_64/include/QtMultimedia/qmediaencodersettings.h \
+		../../5.15.2/mingw81_64/include/QtMultimedia/QVideoProbe \
+		../../5.15.2/mingw81_64/include/QtMultimedia/qvideoprobe.h \
 		ui_mainwindow.h \
 		../../5.15.2/mingw81_64/include/QtCore/QBuffer \
 		../../5.15.2/mingw81_64/include/QtCore/qbuffer.h \

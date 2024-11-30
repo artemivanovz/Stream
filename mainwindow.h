@@ -7,9 +7,9 @@
 #include <QCamera>
 #include <QCameraViewfinder>
 #include <QCameraImageCapture>
-#include <QMainWindow>
 #include <QUdpSocket>
 #include <QHostAddress>
+#include <QVideoProbe>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -34,7 +34,10 @@ private slots:
     void stopDisplay();
 
     // void readPendingDatagrams();
-    void captureImage(int id, const QImage &image);
+    // void captureImage(int id, const QImage &image);
+
+    void processFrame(const QVideoFrame &frame);
+    void sendImage(const QImage &image);
 
     void on_StreamButton_clicked(bool checked);
     void on_CameraButton_clicked(bool checked);
@@ -42,11 +45,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QCamera *camera;
-    QCameraImageCapture *imageCapture;
+    // QCameraImageCapture *imageCapture;
     imagesender *imageSender;
     ConfigManager *configManager;
     CommandReceiver *commandReceiver;
     QUdpSocket *socket;
+    QVideoProbe *videoProbe;
 
     static QString targetAddress;
     static quint16 targetPort;

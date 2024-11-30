@@ -18,28 +18,31 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , camera(nullptr)
-    , imageCapture(nullptr)
     , imageSender(new imagesender(this))
     , configManager(new ConfigManager(this))
     , commandReceiver(new CommandReceiver(this))
-    , capturing(true)
+    , videoProbe(nullptr)
+    , capturing(false)
     , frameNumber(0)
 {
     ui->setupUi(this);
 
     camera = new QCamera(this);
-    camera->setViewfinder(ui->cameraViewfinder);
 
-    QSizePolicy sp_retain = ui->cameraViewfinder->sizePolicy();
+    videoProbe = new QVideoProbe(this);
+    if (videoProbe->setSource(camera)) {
+        connect(videoProbe, &QVideoProbe::videoFrameProbed, this, &MainWindow::processFrame);
+    } else {
+        ui->imageLabel->setText("Не удалось подключить QVideoProbe");
+        return;
+    }
+
+    QSizePolicy sp_retain = ui->imageLabel->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
-    ui->cameraViewfinder->setSizePolicy(sp_retain);
+    ui->imageLabel->setSizePolicy(sp_retain);
 
     targetAddress = configManager->getTargetAddress();
     targetPort = configManager->getTargetPort();
-
-    imageCapture = new QCameraImageCapture(camera,this);
-    imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
-    connect(imageCapture, &QCameraImageCapture::imageCaptured,this, &MainWindow::captureImage);
 
     connect(commandReceiver, &CommandReceiver::startCameraCommand, this, &MainWindow::startCamera);
     connect(commandReceiver, &CommandReceiver::stopCameraCommand, this, &MainWindow::stopCamera);
@@ -81,32 +84,52 @@ void MainWindow::on_StreamButton_clicked(bool checked)
     }
 }
 
-void MainWindow::captureImage(int id,const QImage &image){
-    Q_UNUSED(id);
+void MainWindow::processFrame(const QVideoFrame &frame)
+{
 
-    QUdpSocket *commandSocket = commandReceiver->getSocket();
+    QVideoFrame cloneFrame(frame);
+    if (!cloneFrame.map(QAbstractVideoBuffer::ReadOnly)) {
+        qWarning() << "Не удалось отобразить кадр";
+        return;
+    }
 
-    QImage greyImage = image.convertToFormat(QImage::Format_Grayscale8);
+    QImage image;
+    image = cloneFrame.image().convertToFormat(QImage::Format_RGB32);
 
-    imageSender->sendImage(greyImage, QHostAddress(targetAddress), targetPort, frameNumber, commandSocket);
-    frameNumber++;
+    cloneFrame.unmap();
+
+    if (image.isNull()) {
+        qWarning() << "Изображение пустое";
+        return;
+    }
+
+    // Отображение изображения на QLabel
+    ui->imageLabel->setPixmap(QPixmap::fromImage(image).scaled(ui->imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     if (capturing) {
-          QMetaObject::invokeMethod(imageCapture, "capture", Qt::QueuedConnection);
+        QMetaObject::invokeMethod(this, "sendImage", Qt::QueuedConnection, Q_ARG(QImage, image));
     }
+
 }
 
+void MainWindow::sendImage(const QImage &image)
+{
+    QImage greyImage = image.convertToFormat(QImage::Format_Grayscale8);
+
+    imageSender->sendImage(greyImage, QHostAddress(targetAddress), targetPort, frameNumber, commandReceiver->getSocket());
+    frameNumber++;
+}
 
 void MainWindow::startCamera(){
     ui->CameraButton->setText("КАМЕРА ВЫКЛ");
-    ui->cameraViewfinder->show();
+    ui->imageLabel->show();
     camera->start();
     ui->CameraButton->setChecked(true);
     qDebug() << "Команда startCamera выполнена";
 }
 void MainWindow::stopCamera(){
     ui->CameraButton->setText("КАМЕРА ВКЛ");
-    ui->cameraViewfinder->hide();
+    ui->imageLabel->hide();
     camera->stop();
     ui->CameraButton->setChecked(false);
     qDebug() << "Команда stopCamera выполнена";
@@ -114,7 +137,7 @@ void MainWindow::stopCamera(){
 void MainWindow::startDisplay(){
     ui->StreamButton->setText("ТРАНСЛЯЦИЯ ВЫКЛ");
     capturing = true;
-    imageCapture->capture();
+    // imageCapture->capture();
     ui->StreamButton->setChecked(true);
     qDebug() << "Команда startDisplay выполнена";
 }
