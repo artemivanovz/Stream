@@ -15,6 +15,7 @@ void imagesender::sendImage(const QImage &image, const QHostAddress &address, qu
         QDataStream stream(&packet, QIODevice::WriteOnly);
 
         // Add frame number, total rows, row index, bytes per line, and bytes per pixel to the packet
+        stream << QString("IMG");
         stream << static_cast<quint16>(frameNumber);
         stream << static_cast<quint16>(totalRows);
         stream << static_cast<quint16>(i);

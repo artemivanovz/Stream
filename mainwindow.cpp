@@ -120,29 +120,45 @@ void MainWindow::sendImage(const QImage &image)
     frameNumber++;
 }
 
+void MainWindow::sendCommand(const QString &command){
+    QUdpSocket *commandSocket = commandReceiver->getSocket();
+    QByteArray data = command.toUtf8();
+    QByteArray packet;
+    QDataStream stream(&packet, QIODevice::WriteOnly);
+    stream << QString("CMD") << QString(data);
+    commandSocket->writeDatagram(packet,QHostAddress(targetAddress),targetPort);
+}
+
 void MainWindow::startCamera(){
     ui->CameraButton->setText("КАМЕРА ВЫКЛ");
+    sendCommand("startCamera");
     ui->imageLabel->show();
     camera->start();
     ui->CameraButton->setChecked(true);
     qDebug() << "Команда startCamera выполнена";
 }
+
 void MainWindow::stopCamera(){
     ui->CameraButton->setText("КАМЕРА ВКЛ");
+    sendCommand("stopCamera");
     ui->imageLabel->hide();
     camera->stop();
     ui->CameraButton->setChecked(false);
     qDebug() << "Команда stopCamera выполнена";
 }
+
 void MainWindow::startDisplay(){
     ui->StreamButton->setText("ТРАНСЛЯЦИЯ ВЫКЛ");
+    sendCommand("startDisplay");
     capturing = true;
     // imageCapture->capture();
     ui->StreamButton->setChecked(true);
     qDebug() << "Команда startDisplay выполнена";
 }
+
 void MainWindow::stopDisplay(){
     ui->StreamButton->setText("ТРАНСЛЯЦИЯ ВКЛ");
+    sendCommand("stopDisplay");
     capturing = false;
     frameNumber =0;
     ui->StreamButton->setChecked(false);

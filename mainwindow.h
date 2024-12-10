@@ -33,11 +33,9 @@ private slots:
     void startDisplay();
     void stopDisplay();
 
-    // void readPendingDatagrams();
-    // void captureImage(int id, const QImage &image);
-
     void processFrame(const QVideoFrame &frame);
     void sendImage(const QImage &image);
+    void sendCommand(const QString &comand);
 
     void on_StreamButton_clicked(bool checked);
     void on_CameraButton_clicked(bool checked);
