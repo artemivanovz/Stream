@@ -55,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->StreamButton->setCheckable(true);
     ui->StreamButton->setChecked(false);
 
-    commandReceiver->bindSocket(QHostAddress::LocalHost, 12345);
+    commandReceiver->bindSocket(QHostAddress::Any, 12345);
 
 }
 

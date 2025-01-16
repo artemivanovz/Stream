@@ -1100,6 +1100,35 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../5.15.2/mingw81_64/include/QtMultimedia/QVideoProbe \
 		../../5.15.2/mingw81_64/include/QtMultimedia/qvideoprobe.h \
 		ui_mainwindow.h \
+		../../5.15.2/mingw81_64/include/QtCore/QVariant \
+		../../5.15.2/mingw81_64/include/QtWidgets/QApplication \
+		../../5.15.2/mingw81_64/include/QtWidgets/qapplication.h \
+		../../5.15.2/mingw81_64/include/QtCore/qcoreapplication.h \
+		../../5.15.2/mingw81_64/include/QtCore/qeventloop.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qdesktopwidget.h \
+		../../5.15.2/mingw81_64/include/QtGui/qguiapplication.h \
+		../../5.15.2/mingw81_64/include/QtGui/qinputmethod.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/QGridLayout \
+		../../5.15.2/mingw81_64/include/QtWidgets/qgridlayout.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qlayout.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qlayoutitem.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qboxlayout.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/QHBoxLayout \
+		../../5.15.2/mingw81_64/include/QtWidgets/QLabel \
+		../../5.15.2/mingw81_64/include/QtWidgets/qlabel.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qframe.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/QMenuBar \
+		../../5.15.2/mingw81_64/include/QtWidgets/qmenubar.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qmenu.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qaction.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qactiongroup.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/QPushButton \
+		../../5.15.2/mingw81_64/include/QtWidgets/qpushbutton.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/qabstractbutton.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/QStatusBar \
+		../../5.15.2/mingw81_64/include/QtWidgets/qstatusbar.h \
+		../../5.15.2/mingw81_64/include/QtWidgets/QVBoxLayout \
+		../../5.15.2/mingw81_64/include/QtWidgets/QWidget \
 		../../5.15.2/mingw81_64/include/QtCore/QBuffer \
 		../../5.15.2/mingw81_64/include/QtCore/qbuffer.h \
 		../../5.15.2/mingw81_64/include/QtCore/QDebug \
